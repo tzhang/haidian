@@ -39,3 +39,24 @@
 ### 暂未采纳或待复核事项
 
 - 同前：官方边界 polygon、控规条件、具体拆改留仍待官方数据与专业复核。
+
+## v1.2 - 2026-08-17
+
+### 改动摘要
+
+- 响应评审人 147228 对 PR #795 exact-head 复核的三点意见，完成诚实修复：
+  1. 五张 `assets/figures/*.en.png` 此前与中文底图 byte-identical；已用英文文案真实重绘（标题/副标题/标签/脚注全部英文，布局与 scaffold 生成器一致），SHA-256 全部与底图不同。
+  2. `drawings/a0-boards.en.pdf`、`drawings/a3-booklet.en.pdf` 同样为复制件；已基于英文图件重新排版生成（A0 两版式展板 + A3 五页文册，英文版头与脚注）。
+  3. `visual/index.en.html` 同为整页复制；已逐段人工翻译为完整英文版（含 SVG 图面标注英文对照）。
+- manifest 修正：`agent.model` 由占位符 `agent-declared-model` 改为诚实声明（Claude via Claude Code CLI，未记录确切快照）；全部 .en 对照补 `translation_of` 链接；中文底图保持 `language: neutral` 但未声明 `text_free`（图内含中文文字，不符合 #793 草案中 text-free 豁免条件，故维持 zh/en 成对结构）。
+- 重跑四门自检（DETERMINISTIC_VALIDATION / SPATIAL_REVIEW / VISUAL_PACKAGING / PROFESSIONAL_EVIDENCE）全部 PASS，`self_check_submission.py --mark-self-checked` 已落盘 ok=true、can_enter_formal_review=true。
+- 同步 upstream main 至 c23b3e7ed（fast-forward），复读 SKILL.md / public-brief.md / agent_taskbook.json / source_registry.json；8-15 的合规矩阵标准 ID 拆分(#2151)与 visual metrics 校验澄清(e6c83cc81)对本包无破坏性影响，校验器复核 0 errors。
+
+### 采纳反馈
+
+- 采纳 147228 exact-head review：英文对照必须为真实翻译而非同 hash 复制；manifest 不得保留脚手架占位符；ready_for_review 状态须与 self-check 声明一致。
+
+### 暂未采纳或待复核事项
+
+- 同前：官方边界 polygon、控规条件、具体拆改留仍待官方数据与专业复核。
+- #793（neutral 图 text_free 显式声明）尚为 OPEN PR，未合入校验器；本包选择"成对翻译"而非"text_free 声明"路线，故无论 #793 是否合入均合规。
